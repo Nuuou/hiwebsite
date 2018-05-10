@@ -1,0 +1,137 @@
+// mis colores
+$color-white: #FFFFFF;
+$color-dark-gunmetal: #1E1E28;
+$color-jet: #32323E;
+$color-granite-gray: #646470;
+$color-sunsetorange: #F05A5A;
+$color-carmine-pink: #E14B4B;
+
+// moxlons
+$respond-to-queries: (
+    smartphone: '(max-width: 600px)',
+    tablet-portrait: '(max-width: 768px)',
+    tablet: '(max-width: 1024px)'
+);
+
+@mixin respond-to($query, $type: all) {
+    $media_query: $query;
+    @if map-has-key($respond-to-queries, $query) {
+        $media_query: map-get($respond-to-queries, $query);
+    }
+
+    @media #{$type} and #{$media_query} {
+        @content;
+    }
+}
+
+body {
+    color: $color-white;
+    background: $color-dark-gunmetal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: $color-granite-gray;
+    font-weight: bold;
+}
+
+// Cool P5 canvas thang
+#cool-thing {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -99;
+}
+
+.container {
+    width: 100%;
+    max-width: 1280px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 40px;
+    padding-left: 40px;
+}
+.marquee {
+    &__content {
+        padding: 20px;
+        background: $color-white;
+    }
+}
+
+.row {
+    &__headline {
+        padding: 60px 0;
+        color: $color-sunsetorange;
+        text-align: center;
+    }
+}
+
+.card-grid {
+    display: grid;
+    grid-gap: 20px;
+
+    &--featured {
+        grid-template-columns: repeat(3, 1fr);
+
+        @include respond-to(tablet-portrait) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        @include respond-to(smartphone) {
+            grid-template-columns: 1fr;
+        }
+    }
+    &--list {
+        grid-template-columns: 1fr;
+    }
+}
+.grid-item {
+    display: flex;
+    background: $color-white;
+
+    &--featured {
+        flex-direction: column;
+    }
+    &--list {
+        flex-direction: row;
+
+        @include respond-to(smartphone) {
+            flex-direction: column;
+        }
+    }
+
+    &__image {
+        object-fit: cover;
+        width: 100%;
+        height: auto;
+        max-height: 200px;
+    }
+    &__headline {
+        color: $color-granite-gray;
+        font-weight: bold;
+    }
+    &__content {
+        padding: 20px;
+    }
+
+    &--featured & {
+
+    }
+    &--list & {
+        &__image {
+            width: 200px;
+            height: 100%;
+            max-height: none;
+
+            @include respond-to(smartphone) {
+                width: 100%;
+                height: auto;
+                max-height: 200px;
+            }
+        }
+    }
+}
